@@ -1,33 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.0.6</version>
+        <relativePath/>
+    </parent>
 
-    <groupId>com.example</groupId>
-    <artifactId>microservices-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <groupId>com.uncledavecode</groupId>
+    <artifactId>microservices</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Microservices Parent</name>
-    <description>Parent POM for microservices</description>
 
     <properties>
-        <java.version>17</java.version>
-        <spring-boot.version>3.2.3</spring-boot.version>
-        <spring-cloud.version>2023.0.0</spring-cloud.version>
+        <spring-cloud.version>2022.0.2</spring-cloud.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+
+    <modules>
+        <module>api-gateway</module>
+        <module>microservicio-autenticacion</module>
+        <module>microservicio-usuarios</module>
+        <module>microservicio-pagos</module>
+        <module>servicio-descubrimiento</module>
+    </modules>
+
+    <dependencies>
+
+    </dependencies>
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -38,22 +46,19 @@
         </dependencies>
     </dependencyManagement>
 
-    <modules>
-        <module>api-gateway</module>
-        <module>microservicio-autenticacion</module>
-        <module>microservicio-usuarios</module>
-        <module>microservicio-pagos</module>
-    </modules>
-
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>3.2.3</version>
 
-            </plugin>
         </plugins>
     </build>
+    <repositories>
+        <repository>
+            <id>netflix-candidates</id>
+            <name>Netflix Candidates</name>
+            <url>https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>
-
