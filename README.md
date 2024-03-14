@@ -10,33 +10,24 @@ El sistema se basa en una arquitectura de microservicios, con cada uno enfocado 
 
 - **API Gateway**: Punto de entrada para las llamadas de API, encaminando solicitudes a los servicios correspondientes y gestionando la autenticación.
 - **Servicio de Autenticación**: Gestiona el registro y autenticación de usuarios, emitiendo tokens JWT.
-- **Microservicio de Usuarios**: Responsable de la creación, actualización y eliminación de cuentas de usuario.(Para  un ADMIN_ROLE)
-- **Microservicio de Pagos**: Procesa y gestiona los pagos y suscripciones.
+- **Microservicio de Usuarios**: Responsable de la creación, actualización y eliminación de cuentas de usuario. (Para un ADMIN_ROLE)
+- **Microservicio de Pagos**: Procesa y gestiona los pagos y suscripciones. (Aún por implementar)
 - **Servicio de Descubrimiento (Eureka Server)**: Mantiene registro y facilita la comunicación entre servicios.
 
 ## Configuración y Puesta en Marcha
 
 ### Requisitos Previos
 
+Para ejecutar el sistema, se requieren las siguientes herramientas y dependencias:
+
 - Java JDK 17
 - Maven
 - PostgreSQL
-- Spring Boot Starter Data JPA
-- Spring Boot Starter Security
-- Spring Boot Starter Web
-- H2 Database (para pruebas)
-- PostgreSQL Driver
-- Spring Boot DevTools (para desarrollo)
-- Project Lombok (para reducir boilerplate)
-- Spring Boot Configuration Processor
-- Spring Boot Starter Test (para pruebas)
-- Spring Security Test (para pruebas)
-- JJwt API
-- JJwt Implementation
-- Spring Cloud Starter Netflix Eureka Server
-- JJwt Jackson (para el soporte de Jackson)
+- Las dependencias de Spring Boot como Data JPA, Security, Web, etc.
 
 ### Instalación y Ejecución
+
+Para poner en marcha los microservicios, siga los siguientes pasos:
 
 1. Clone el repositorio de código fuente.
 2. Instale PostgreSQL y cree las bases de datos con los esquemas proporcionados.
@@ -44,6 +35,8 @@ El sistema se basa en una arquitectura de microservicios, con cada uno enfocado 
 4. Navegue al directorio de cada microservicio y ejecute `mvn spring-boot:run`.
 
 ### Puertos de Microservicios
+
+Los microservicios se ejecutan en los siguientes puertos:
 
 - API Gateway: `8080`
 - Servicio de Autenticación: `8081`
@@ -53,13 +46,13 @@ El sistema se basa en una arquitectura de microservicios, con cada uno enfocado 
 
 ## Endpoints
 
-Descripción de endpoints clave para cada microservicio.
+Los endpoints clave para cada microservicio se describen a continuación:
 
 ### API Gateway
 
-- `/autenticacion/**`
-- `/usuarios/**`
-- `/pagos/**`
+- `/autenticacion/**` - Rutas de autenticación
+- `/usuarios/**` - Rutas de usuario
+- `/pagos/**` - Rutas de pagos (aún no implementado)
 
 ### Servicio de Autenticación
 
@@ -72,7 +65,8 @@ Descripción de endpoints clave para cada microservicio.
 - `POST /api/users/` - Crear usuario
 
 ### Microservicio de Pagos
-#AUN FALTA IMPLEMENTAR ESTE MICROSERVICIO
+
+(Aún por implementar)
 - `GET /api/payments/` - Obtener pagos
 - `POST /api/payments/` - Crear pago
 
@@ -80,27 +74,39 @@ Descripción de endpoints clave para cada microservicio.
 
 ### Registrar un Usuario mediante Postman
 
-#Para registrar un nuevo usuario a través de Postman, sigue estos pasos:
+Para registrar un nuevo usuario a través de Postman, sigue estos pasos:
+
 1. Abre Postman y crea una nueva solicitud POST.
-2. Ingresa la URL del API Gateway seguida por el endpoint de registro: `http://localhost:8080/api/auth/register`
+2. Ingresa la URL del API Gateway seguida por el endpoint de registro: `http://localhost:8080/api/auth/register`.
 3. En la pestaña "Headers", configura el siguiente header:
    - Key: `Content-Type`
-   - Value: `application/json`
+   - Value: `application/json`.
 4. Selecciona la pestaña "Body", elige "raw" y asegúrate de que el formato es "JSON (application/json)".
 5. Ingresa los detalles del usuario en el cuerpo de la solicitud en formato JSON:
-  
-   {
-       "username": "newuser",
-       "password": "newpassword",
-       "roles": "user"
-   }
 
-#Para obtener un token JWT para un usuario registrado, sigue estos pasos:
-1. Abre Postman y crea una nueva solicitud POST dirigida al endpoint de login: `http://localhost:8080/api/auth/login`
+```json
+{
+   "username": "newuser",
+   "password": "newpassword",
+   "roles": "user"
+}
+```
+
+
+### Obtener un Token JWT
+
+Para obtener un token JWT para un usuario registrado, sigue estos pasos:
+
+1. Abre Postman y crea una nueva solicitud POST dirigida al endpoint de login: `http://localhost:8080/api/auth/login`.
 2. En la pestaña "Headers", asegúrate de que el header esté establecido a `Content-Type: application/json`.
 3. Selecciona la pestaña "Body", elige "raw" y selecciona "JSON (application/json)".
 4. Escribe las credenciales del usuario en el cuerpo de la solicitud:
-   {
-       "username": "newuser",
-       "password": "newpassword"
-   }
+
+```json
+{
+   "username": "newuser",
+   "password": "newpassword"
+}
+```
+
+
