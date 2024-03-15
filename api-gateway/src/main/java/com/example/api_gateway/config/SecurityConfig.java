@@ -25,10 +25,17 @@ public class SecurityConfig {
                 .httpBasic().disable()
                 .authorizeExchange(exchanges -> exchanges
                         .pathMatchers("/autenticacion/**").permitAll()
+                        .pathMatchers("/api/users/**").authenticated()
                         .anyExchange().authenticated()
                 )
                 .addFilterAt(jwtAuthenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION);
 
         return http.build();
     }
+
 }
+
+
+
+
+

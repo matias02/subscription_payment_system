@@ -2,7 +2,6 @@ package com.example.api_gateway.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,6 +17,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,8 +26,6 @@ public class JwtAuthenticationFilter implements WebFilter {
     @Value("${app.jwtSecret}")
     private String jwtSecret;
 
-    @Value("${app.jwtExpirationMs}")
-    private int jwtExpirationMs;
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         String token = exchange.getRequest().getHeaders().getFirst("Authorization");
@@ -41,26 +39,26 @@ public class JwtAuthenticationFilter implements WebFilter {
                         .getBody();
 
                 String username = claims.getSubject();
-                List<SimpleGrantedAuthority> authorities = ((List<?>) claims.get("rol")).stream()
-                        .map(authority -> new SimpleGrantedAuthority((String) authority))
-                        .collect(Collectors.toList());
+
+                Object roles = claims.get("role");
+                List<SimpleGrantedAuthority> authorities = Collections.emptyList();
+
+                if (roles instanceof List) {
+                    authorities = ((List<?>) roles).stream()
+                            .map(object -> new SimpleGrantedAuthority((String) object))
+                            .collect(Collectors.toList());
+                }
 
                 Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
                 return chain.filter(exchange).contextWrite(ReactiveSecurityContextHolder.withAuthentication(authentication));
             } catch (SignatureException e) {
-                return onAuthenticationFailure(exchange, "Invalid JWT signature");
+                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                return exchange.getResponse().setComplete();
             } catch (Exception e) {
-                return onAuthenticationFailure(exchange, "Authentication failed");
+                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                return exchange.getResponse().setComplete();
             }
         }
         return chain.filter(exchange);
     }
-
-    private Mono<Void> onAuthenticationFailure(ServerWebExchange exchange, String errorMsg) {
-        exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-        exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
-        byte[] bytes = ("{\"error\": \"" + errorMsg + "\"}").getBytes(StandardCharsets.UTF_8);
-        return exchange.getResponse().writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(bytes)));
-    }
 }
-

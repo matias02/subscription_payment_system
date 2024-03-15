@@ -39,7 +39,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             String jwt = getJwtFromRequest(request);
 
             if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
-                // Log para imprimir el JWT recibido
                 logger.info("Received JWT Token: {}", jwt);
 
                 String username = tokenProvider.getUsernameFromJWT(jwt);

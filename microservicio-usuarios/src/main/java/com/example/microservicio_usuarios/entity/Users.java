@@ -1,10 +1,14 @@
 package com.example.microservicio_usuarios.entity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Column;
+
 
 @Entity
-@Table(name = "users")
-public class User {
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,22 +23,15 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    private String fullName;
 
-    private Boolean enabled = false;
-
-    public User() {
+    public Users() {
     }
 
-    public User(String username, String password, String email, String fullName, Boolean enabled) {
+    public Users(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.fullName = fullName;
-        this.enabled = enabled;
     }
-
-    // Resto de getters y setters...
 
     public Long getId() {
         return id;
@@ -68,19 +65,5 @@ public class User {
         this.email = email;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
 }
+

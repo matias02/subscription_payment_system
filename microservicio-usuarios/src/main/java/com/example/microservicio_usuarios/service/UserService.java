@@ -1,16 +1,14 @@
 package com.example.microservicio_usuarios.service;
 
-import com.example.microservicio_usuarios.entity.User;
+import com.example.microservicio_usuarios.entity.Users;
 import com.example.microservicio_usuarios.exception.UserNotFoundException;
 import com.example.microservicio_usuarios.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
+import java.util.Optional;
 
 @Service
-@Transactional
 public class UserService {
 
     private final UserRepository userRepository;
@@ -20,32 +18,31 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<User> findAllUsers() {
+    public List<Users> findAllUsers() {
         return userRepository.findAll();
     }
 
-    public User findUserById(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
+    public Optional<Users> findUserById(Long id) {
+        return userRepository.findById(id);
     }
 
-    public User saveUser(User user) {
-        return userRepository.save(user);
+    public Users saveUser(Users Users) {
+        return userRepository.save(Users);
     }
 
-    public User updateUser(Long id, User userDetails) {
-        User user = findUserById(id);
-        user.setUsername(userDetails.getUsername());
-        user.setEmail(userDetails.getEmail());
-        return userRepository.save(user);
+    public Optional<Users> updateUser(Long id, Users userDetails) {
+        return userRepository.findById(id).map(user -> {
+            user.setUsername(userDetails.getUsername());
+            user.setEmail(userDetails.getEmail());
+            user.setPassword(userDetails.getPassword());
+            return userRepository.save(user);
+        });
     }
 
-    public boolean deleteUser(Long id) {
-        User user = findUserById(id);
-        if (user != null) {
+    public Optional<Void> deleteUser(Long id) {
+        return userRepository.findById(id).map(user -> {
             userRepository.delete(user);
-            return true;
-        }
-        return false;
+            return null;
+        });
     }
 }

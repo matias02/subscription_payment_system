@@ -57,15 +57,11 @@ public class JwtTokenProvider {
                     .parseClaimsJws(authToken);
             return true;
         } catch (SignatureException ex) {
-            // Log the exception or handle it as you deem appropriate
         } catch (MalformedJwtException ex) {
-            // Log the exception or handle it as you deem appropriate
         } catch (ExpiredJwtException ex) {
-            // Log the exception or handle it as you deem appropriate
         } catch (UnsupportedJwtException ex) {
-            // Log the exception or handle it as you deem appropriate
         } catch (IllegalArgumentException ex) {
-            // Log the exception or handle it as you deem appropriate
+
         }
         return false;
     }
