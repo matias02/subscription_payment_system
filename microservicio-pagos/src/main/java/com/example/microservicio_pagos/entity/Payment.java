@@ -1,114 +1,167 @@
 package com.example.microservicio_pagos.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "payments")
 public class Payment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private BigDecimal amount;
-    private String currency;
     private String status;
-    private String mercadoPagoPaymentId;
-    private String paymentMethod;
-    private String paymentType;
-    private String mercadoPagoStatusDetail;
-    private Long userId;
-    private LocalDateTime paymentDate;
-
-    public Payment() {
-    }
-
+    private String paymentMethodId;
+    private String paymentTypeId;
+    private String currencyId;
+    private BigDecimal transactionAmount;
+    private BigDecimal transactionDetails;
+    private BigDecimal netReceivedAmount;
+    private Integer installments;
+    private String description;
+    private LocalDateTime dateCreated;
+    private LocalDateTime dateApproved;
+    private String operationType;
+    private String payerId;
+    private String externalReference;
+    private String additionalInfo;
+    private String PayerEmail;
 
 
     public Long getId() {
         return id;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public void setId(Long id) {
+        this.id = id;
     }
-
-    public String getCurrency() {
-        return currency;
-    }
-
     public String getStatus() {
         return status;
     }
 
-    public String getMercadoPagoPaymentId() {
-        return mercadoPagoPaymentId;
+
+    public String getPayerEmail() {
+        return PayerEmail;
     }
 
-    public String getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public String getPaymentType() {
-        return paymentType;
-    }
-
-    public String getMercadoPagoStatusDetail() {
-        return mercadoPagoStatusDetail;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public LocalDateTime getPaymentDate() {
-        return paymentDate;
-    }
-
-    // Setters
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setPayerEmail(String payerEmail) {
+        this.PayerEmail = payerEmail;
     }
 
     public void setStatus(String status) {
         this.status = status;
     }
 
-    public void setMercadoPagoPaymentId(String mercadoPagoPaymentId) {
-        this.mercadoPagoPaymentId = mercadoPagoPaymentId;
+    public String getPaymentMethodId() {
+        return paymentMethodId;
     }
 
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
+    public void setPaymentMethodId(String paymentMethodId) {
+        this.paymentMethodId = paymentMethodId;
+    }
+    public String getPaymentTypeId() {
+        return paymentTypeId;
     }
 
-    public void setPaymentType(String paymentType) {
-        this.paymentType = paymentType;
+    public void setPaymentTypeId(String paymentTypeId) {
+        this.paymentTypeId = paymentTypeId;
     }
 
-    public void setMercadoPagoStatusDetail(String mercadoPagoStatusDetail) {
-        this.mercadoPagoStatusDetail = mercadoPagoStatusDetail;
+    public String getCurrencyId() {
+        return currencyId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setCurrencyId(String currencyId) {
+        this.currencyId = currencyId;
     }
 
-    public void setPaymentDate(LocalDateTime paymentDate) {
-        this.paymentDate = paymentDate;
+    public BigDecimal getTransactionAmount() {
+        return transactionAmount;
     }
+    public BigDecimal getTransactionDetails () {
+        return transactionAmount;
+    }
+
+    public void setTransactionAmount(BigDecimal transactionAmount) {
+        this.transactionAmount = transactionAmount;
+    }
+    public void getTransactionDetails(BigDecimal transactionAmount) {
+        this.transactionAmount = transactionAmount;
+    }
+
+    public BigDecimal getNetReceivedAmount() {
+        return netReceivedAmount;
+    }
+
+    public void setNetReceivedAmount(BigDecimal netReceivedAmount) {
+        this.netReceivedAmount = netReceivedAmount;
+    }
+
+    public Integer getInstallments() {
+        return installments;
+    }
+
+    public void setInstallments(Integer installments) {
+        this.installments = installments;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDateTime getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(LocalDateTime dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public LocalDateTime getDateApproved() {
+        return dateApproved;
+    }
+
+    public void setDateApproved(LocalDateTime dateApproved) {
+        this.dateApproved = dateApproved;
+    }
+
+    public String getOperationType() {
+        return operationType;
+    }
+
+    public void setOperationType(String operationType) {
+        this.operationType = operationType;
+    }
+
+    public String getPayer() {
+        return payerId;
+    }
+
+    public void setPayerId(String payerId) {
+        this.payerId = payerId;
+    }
+
+    public String getExternalReference() {
+        return externalReference;
+    }
+
+    public void setExternalReference(String externalReference) {
+        this.externalReference = externalReference;
+    }
+
+    public String getAdditionalInfo() {
+        return additionalInfo;
+    }
+
+    public void setAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
+    }
+
 }
-

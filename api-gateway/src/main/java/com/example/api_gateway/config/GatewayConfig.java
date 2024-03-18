@@ -17,8 +17,8 @@ public class GatewayConfig {
                 .route(r -> r.path("/api/users/**")
                         .filters(f -> f.rewritePath("/api/users/(?<path>.*)", "/${path}"))
                         .uri("lb://usuario-service"))
-                .route(r -> r.path("/pagos/**")
-                        .filters(f -> f.rewritePath("/pagos/(?<path>.*)", "/${path}"))
+                .route(r -> r.path("/api/payments/**")
+                        .filters(f -> f.rewritePath("/api/payments/(?<path>.*)", "/${path}"))
                         .uri("lb://microservicio-pagos"))
                 .build();
     }

@@ -26,8 +26,10 @@ public class SecurityConfig {
                 .authorizeExchange(exchanges -> exchanges
                         .pathMatchers("/autenticacion/**").permitAll()
                         .pathMatchers("/api/users/**").authenticated()
+                        .pathMatchers("/api/payments/**").authenticated()
                         .anyExchange().authenticated()
                 )
+
                 .addFilterAt(jwtAuthenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION);
 
         return http.build();
