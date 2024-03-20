@@ -2,12 +2,17 @@ package com.example.microservicio_pagos.config;
 
 import com.mercadopago.MercadoPagoConfig;
 import com.mercadopago.client.payment.PaymentClient;
+import com.mercadopago.client.preference.PreferenceClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.beans.factory.annotation.Value;
 
 @Configuration
 public class MercadoPagoSdkConfig {
+
+    private static final Logger logger = LoggerFactory.getLogger(MercadoPagoSdkConfig.class);
 
     @Value("${mercadopago.access_token}")
     private String accessToken;
@@ -26,16 +31,25 @@ public class MercadoPagoSdkConfig {
 
     @Bean
     public void configureMercadoPago() {
-        MercadoPagoConfig.setAccessToken(accessToken);
+        logger.info("Configurando MercadoPago SDK...");
+        MercadoPagoConfig.setAccessToken(accessToken.trim());
         MercadoPagoConfig.setMaxConnections(maxConnections);
         MercadoPagoConfig.setConnectionTimeout(connectionTimeout);
         MercadoPagoConfig.setConnectionRequestTimeout(connectionRequestTimeout);
         MercadoPagoConfig.setSocketTimeout(socketTimeout);
+        logger.info("MercadoPago SDK configurado con éxito. Access Token: {}", accessToken.trim());
     }
 
     @Bean
     public PaymentClient paymentClient() {
+        logger.info("Creando bean PaymentClient de MercadoPago");
         return new PaymentClient();
+    }
+
+    @Bean
+    public PreferenceClient preferenceClient() {
+        logger.info("Creando bean PreferenceClient de MercadoPago");
+        return new PreferenceClient();
     }
 }
 
