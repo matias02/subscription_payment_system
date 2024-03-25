@@ -24,9 +24,6 @@ public class GatewayConfig {
                                             logger.info("Response status code: {}", exchange.getResponse().getStatusCode())));
                                 }))
                         .uri("lb://autenticacion-service"))
-
-
-
                 .route(r -> r.path("/api/users/**")
                         .filters(f -> f.rewritePath("/api/users/(?<path>.*)", "/${path}")
                                 .filter((exchange, chain) -> {
@@ -35,10 +32,6 @@ public class GatewayConfig {
                                             logger.info("Response status code: {}", exchange.getResponse().getStatusCode())));
                                 }))
                         .uri("lb://usuario-service"))
-
-
-
-
                 .route(r -> r.path("/api/payments/**")
                         .filters(f -> f.filter((exchange, chain) -> {
                             logger.info("Request to microservicio-pagos: {}", exchange.getRequest().getPath());
@@ -46,6 +39,14 @@ public class GatewayConfig {
                                     logger.info("Response status code: {}", exchange.getResponse().getStatusCode())));
                         }))
                         .uri("lb://microservicio-pagos"))
+                .route(r -> r.path("/api/subscriptions/**")
+                        .filters(f -> f.rewritePath("/api/subscriptions/(?<path>.*)", "/${path}")
+                                .filter((exchange, chain) -> {
+                                    logger.info("Request to microservicios-sub: {}", exchange.getRequest().getPath());
+                                    return chain.filter(exchange).then(Mono.fromRunnable(() ->
+                                            logger.info("Response status code: {}", exchange.getResponse().getStatusCode())));
+                                }))
+                        .uri("lb://microservicios-sub"))
                 .build();
     }
 }

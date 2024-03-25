@@ -27,6 +27,8 @@ public class SecurityConfig {
                         .pathMatchers("/autenticacion/**").permitAll()
                         .pathMatchers("/api/users/**").authenticated()
                         .pathMatchers("/api/payments/**").authenticated()
+                        .pathMatchers("/api/subscriptions/**").authenticated()
+
                         .anyExchange().authenticated()
                 )
 

@@ -1,6 +1,5 @@
 package com.example.microservicio_pagos.dto;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class PreferenceRequestDTO {
@@ -10,6 +9,9 @@ public class PreferenceRequestDTO {
     private String notificationUrl;
     private String externalReference;
     private BackUrlsDTO backUrls;
+
+    private PaymentMethodsDTO paymentMethods;
+
 
     public List<ItemDTO> getItems() {
         return items;
@@ -30,6 +32,8 @@ public class PreferenceRequestDTO {
     public String getAutoReturn() {
         return autoReturn;
     }
+
+
 
     public void setAutoReturn(String autoReturn) {
         this.autoReturn = autoReturn;

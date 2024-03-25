@@ -28,6 +28,7 @@
         <module>microservicio-usuarios</module>
         <module>microservicio-pagos</module>
         <module>servicio-descubrimiento</module>
+        <module>microservicios-sub</module>
     </modules>
 
     <dependencies>

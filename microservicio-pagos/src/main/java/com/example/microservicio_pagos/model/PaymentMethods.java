@@ -13,7 +13,6 @@ public class PaymentMethods {
         this.excludedPaymentTypes = excludedPaymentTypes;
     }
 
-    // Getters y setters
     public List<String> getExcludedPaymentMethods() {
         return excludedPaymentMethods;
     }

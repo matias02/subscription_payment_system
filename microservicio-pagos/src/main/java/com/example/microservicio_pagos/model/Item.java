@@ -15,7 +15,6 @@ public class Item {
     // Constructor por defecto
     public Item() {}
 
-    // Constructor con todos los campos
     public Item(String id, String title, Integer quantity, BigDecimal unitPrice, String currencyId, String description, String pictureUrl, String categoryId) {
         this.id = id;
         this.title = title;
